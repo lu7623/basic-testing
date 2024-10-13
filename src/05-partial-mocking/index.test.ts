@@ -3,9 +3,9 @@ import { mockOne, mockTwo, mockThree, unmockedFunction } from './index';
 
 jest.mock('./index', () => ({
   ...jest.requireActual('./index'),
-  mockOne: () => jest.fn(),
-  mockTwo: () => jest.fn(),
-  mockThree: () => jest.fn(),
+  mockOne: jest.fn(),
+  mockTwo: jest.fn(),
+  mockThree: jest.fn(),
 }));
 
 describe('partial mocking', () => {
@@ -19,6 +19,9 @@ describe('partial mocking', () => {
     mockThree();
     const logSpy = jest.spyOn(global.console, 'log');
 
+    expect(mockOne).toHaveBeenCalled();
+    expect(mockTwo).toHaveBeenCalled();
+    expect(mockThree).toHaveBeenCalled();
     expect(logSpy).not.toHaveBeenCalled();
   });
 
