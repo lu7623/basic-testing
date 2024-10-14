@@ -35,7 +35,13 @@ beforeEach(() => {
 });
 
 describe('throttledGetDataFromApi', () => {
-  jest.useFakeTimers();
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
   test('should create instance with provided base url', async () => {
     jest.runAllTimers();
     const mockCreate = jest.spyOn(axios, 'create');
