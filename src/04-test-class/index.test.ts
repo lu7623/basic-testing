@@ -1,4 +1,6 @@
 // Uncomment the code below and write your tests
+let mockRandom=jest.fn();
+
 import {
   BankAccount,
   getBankAccount,
@@ -6,6 +8,10 @@ import {
   SynchronizationFailedError,
   TransferFailedError,
 } from '.';
+
+jest.mock('lodash', () => ({
+  random: mockRandom
+}))
 
 describe('BankAccount', () => {
   test('should create account with initial balance', () => {
@@ -68,6 +74,7 @@ describe('BankAccount', () => {
 
   test('fetchBalance should return number in case if request did not failed', async () => {
     const bankAcc = getBankAccount(100);
+    mockRandom.mockReturnValue(1)
 
     await expect(bankAcc.fetchBalance()).resolves.toEqual(expect.any(Number));
   });
